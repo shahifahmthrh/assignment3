@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>DATA COVID 19 INDONESIA</h1>
+
+    <div id="hasil1"><h4>Positif: </h4></div>
+    <div id="hasil2"><h4>Sembuh: </h4></div>
+    <div id="hasil3"><h4>Meninggal: </h4></div>     
+    <table id="userTable" border="auto">
+        <tr>
+            <th>Provinsi</th>
+            <div id="nilai1"><th>Positif</th></div>
+            <div id="nilai2"><th>Sembuh</th></div>
+            <div id="nilai3"><th>Meninggal</th></div>
+        </tr>
+    </table>
+
+    <script>
+        var userTable = document.getElementById("userTable");
+
+        fetch("https://indonesia-covid-19.mathdro.id/api/provinsi")
+            .then(response => response.json())
+            .then(resp => {
+                for (var i = 0; i < resp.data.length; i++) {
+                    var row = userTable.insertRow();
+                    row.insertCell(0).innerHTML = resp.data[i].provinsi;
+                    row.insertCell(1).innerHTML = resp.data[i].kasusPosi;
+                    row.insertCell(2).innerHTML = resp.data[i].kasusSemb;
+                    row.insertCell(3).innerHTML = resp.data[i].kasusMeni;
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    </script>
+
+    <script>
+        var table = document.getElementById("nilai1"), sumHsl = 0;
+        for(var t = 1; t < table.rows.length; t++)
+        {
+            sumHsl = sumHsl + parselnt(table.rows[t].cells[1].innerHTML);
+        }
+        document.getElementById("hasil1").innerHTML = "Sum Value = "+ sumHsl;
+
+        var table = document.getElementById("nilai2"), sumHsl = 0;
+        for(var t = 1; t < table.rows.length; t++)
+        {
+            sumHsl = sumHsl + parselnt(table.rows[t].cells[1].innerHTML);
+        }
+        document.getElementById("hasil2").innerHTML = "Sum Value = "+ sumHsl;
+
+        var table = document.getElementById("nilai3"), sumHsl = 0;
+        for(var t = 1; t < table.rows.length; t++)
+        {
+            sumHsl = sumHsl + parselnt(table.rows[t].cells[1].innerHTML);
+        }
+        document.getElementById("hasil3").innerHTML = "Sum Value = "+ sumHsl;
+    </script>
+
+    
+</body>
+</html>
